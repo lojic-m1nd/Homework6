@@ -1,7 +1,6 @@
 package org.future.code.homework;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -55,12 +54,22 @@ public class HomeWork6 {
         String sound;
         Integer times;
         public List<String> play(){
-            play().add("Трунь");
-            System.out.println(play());
-            return play();
+            ArrayList<String> melody = new ArrayList<>() {
+            };
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 1; i < getTimes(); i++) {
+                stringBuilder.append(getSound()).append(" ");
+            }
+            stringBuilder.append(getSound());
+            melody.add(String.valueOf(stringBuilder));
+            return melody;
         }
         public List<String> playWith(Playable playable){
-            return new ArrayList<String>();
+            ArrayList<String> music = new ArrayList<>();
+            music.addAll(play());
+            music.addAll(playable.play());
+            return music;
         }
     }
 
@@ -84,18 +93,28 @@ public class HomeWork6 {
         public List<Instrument> getInstruments() {
             return instruments;
         }
-
         List<Instrument> instruments;
         Orchestra(Instrument... instruments){
+            this.instruments = List.of(instruments);
         }
 
         public List<String> play() {
-            play().add("Трунь");
-            System.out.println(play());
-            return play();
+            ArrayList<String> music = new ArrayList<>() {};
+            for (Instrument instrument: instruments) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 1; i < instrument.getTimes(); i++) {
+                    stringBuilder.append(instrument.getSound()).append(" ");
+                }
+                stringBuilder.append(instrument.getSound());
+                music.add(String.valueOf(stringBuilder));
+            }
+            return music;
         }
         public List<String> playWith(Playable playable) {
-            return null;
+            ArrayList<String> music = new ArrayList<>();
+            music.addAll(play());
+            music.addAll(playable.play());
+            return music;
         }
     }
 
